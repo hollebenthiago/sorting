@@ -4,6 +4,7 @@ var canvas;
 var shufflingx;
 var shufflingy;
 var sorting;
+var bubble = true;
 var sum = true;
 let xs = [];
 let ys = [];
