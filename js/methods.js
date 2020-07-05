@@ -19,3 +19,12 @@ var bubblesort = function(bubblingx, bubblingy, xs, ys) {
         bubblingy++;
     }
 }
+
+var quicksort = function(array, start, end, whichArray) {
+    justStarted = false;
+    if (start < end) {
+        let rightPos = partition(array, start, end)
+        quicksort(array, start, rightPos - 1, whichArray)
+        quicksort(array, rightPos + 1, end, whichArray)
+    }
+}

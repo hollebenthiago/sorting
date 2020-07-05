@@ -14,21 +14,16 @@ function setup() {
     shufflebtn = createButton('Shuffle!')
     shufflebtn.parent('buttonshere')
 
-    sortbtn.mousePressed(() => {
-        resetvars();
-        shufflingx = false;
-        shufflingy = false;
-        sorting    = true;
-        loop();
-    })
-    shufflebtn.mousePressed(() => {
-        resetvars();
-        shufflingx = true;
-        shufflingy = true;
-        sorting    = false;
-        loop();
-    })
-    sortbtn.mousePressed
+    methodSelect = createSelect();
+    methodSelect.parent('buttonshere')
+    methodSelect.option('Bubble sort')
+    methodSelect.option('Quick-ish sort')
+    methodSelect.selected('Bubble sort')
+    methodSelect.changed(methodChanged);
+
+    sortbtn.mousePressed(sortPress)
+    shufflebtn.mousePressed(shufflePress)
+    // sortbtn.mousePressed
     
     
     for (let i = 0; i < width; i++) {
@@ -61,7 +56,7 @@ function draw() {
                 shuffleCountery--;
             }
             if ((shuffleCounterx  == 1) || (shuffleCountery == 1)) {
-                console.log(shuffleCounterx, shuffleCountery)
+                // console.log(shuffleCounterx, shuffleCountery)
                 break
             }
         }
@@ -74,6 +69,20 @@ function draw() {
     }
     else if (!shufflingx && !shufflingy && sorting && bubble) {
         bubblesort(bubblingx, bubblingy, xs, ys)
+    }
+    else if (!shufflingx && !shufflingy && sorting && quick) {
+        if (percent < sizePartitions && sizePartitions >= 1) {
+            quicksort(xs, Math.floor(percent * (xs.length - 1) / sizePartitions), Math.floor((1 + percent) * (xs.length - 1) / sizePartitions), 0)
+            quicksort(ys, Math.floor(percent * (ys.length - 1) / sizePartitions), Math.floor((1 + percent) * (ys.length - 1) / sizePartitions), 1)
+            // quicksort(ys, 0, ys.length-1, 1)
+            percent ++;
+            // console.log(percent)
+        }
+        else if (percent == sizePartitions) {
+            percent = 0
+            sizePartitions = Math.ceil(sizePartitions/2) ;
+        }
+        
     }
     for (let x = 0; x < w; x++) {
         for (let y = 0; y < h; y++) {
